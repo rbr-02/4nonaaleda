@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Nona Aleda 🌻</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(to bottom, #d5f0ff, #b8e2ff);
+    color: #222;
+    text-align: center;
+    overflow-x: hidden;
+  }
+
+  .container {
+    padding: 40px 20px;
+  }
+
+  h2 {
+    color: #4ba3f0;
+    margin-bottom: 5px;
+  }
+
+  p {
+    line-height: 1.6;
+  }
+
+  /* PIN Section */
+  #pinSection {
+    max-width: 400px;
+    background: rgba(255,255,255,0.85);
+    margin: 60px auto;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  }
+
+  input.pin {
+    width: 80%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #aad7ff;
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 4px;
+  }
+
+  .btn, .play-btn {
+    margin-top: 10px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .btn {
+    background: #ffd54a;
+  }
+
+  .play-btn {
+    background: #a6dbff;
+  }
+
+  .msg {
+    margin-top: 10px;
+    color: #b33;
+    font-weight: 600;
+  }
+
+  /* Scene */
+  .scene {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+  }
+
+  .sunflower {
+    width: 250px;
+    height: 250px;
+    position: relative;
+    margin: 0 auto;
+    animation: sway 4s ease-in-out infinite;
+  }
+
+  .petal {
+    position: absolute;
+    width: 70px;
+    height: 140px;
+    background: #ffd54a;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    transform: scale(0) rotate(0deg) translate(-50%, -100%);
+    opacity: 0;
+  }
+
+  .center {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: #5a3a18;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+
+  .stem {
+    width: 10px;
+    height: 200px;
+    background: #2e8b57;
+    margin: 0 auto;
+    border-radius: 5px;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+
+  @keyframes sway {
+    0%,100% { transform: rotate(0deg); }
+    50% { transform: rotate(2deg); }
+  }
+
+  @keyframes bloomPetal {
+    to { transform: scale(1) rotate(var(--rot)) translate(-50%, -100%); opacity: 1; }
+  }
+
+  @keyframes bloomCenter {
+    to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  }
+
+  @keyframes growStem {
+    to { transform: scaleY(1); }
+  }
+
+  /* Letter */
+  .letter {
+    display: none;
+    background: #fffef8;
+    margin: 60px auto;
+    max-width: 700px;
+    text-align: left;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    animation: fadeIn 1s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .signature {
+    text-align: right;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #666;
+  }
+</style>
+</head>
+<body>
+
+<div id="pinSection">
+  <h2>Masukkan PIN</h2>
+  <p>Hanya Nona Aleda yang tahu 💙</p>
+  <input type="password" class="pin" id="pinInput" placeholder="••••••" maxlength="6"><br>
+  <button class="btn" id="pinSubmit">Masuk</button>
+  <button class="play-btn" id="audioPlay">▶ Putar Lagu</button>
+  <div id="pinMsg" class="msg"></div>
+  <audio id="bgAudio">
+    <source src="sa_rindu.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<div class="scene" id="scene">
+  <div class="sunflower" id="sunflower"></div>
+  <div class="stem" id="stem"></div>
+  <div class="letter" id="letter">
+    <h3>Untuk Nona Aleda</h3>
+    <p id="letterText"></p>
+    <div class="signature">— Rixy Bryan</div>
+  </div>
+</div>
+
+<script>
+const pinInput = document.getElementById("pinInput");
+const pinSubmit = document.getElementById("pinSubmit");
+const pinMsg = document.getElementById("pinMsg");
+const scene = document.getElementById("scene");
+const pinSection = document.getElementById("pinSection");
+const sunflower = document.getElementById("sunflower");
+const stem = document.getElementById("stem");
+const letter = document.getElementById("letter");
+const audio = document.getElementById("bgAudio");
+const audioPlay = document.getElementById("audioPlay");
+
+const LETTER = `Beta tau nona seng suka banget kalo beta tiba-tiba diam dan kasih silent treatment. Beta sadar skali, kali ini beta yang salah. Beta kebawa emosi, kebawa cemburu yang seng jelas, dan malah nyakitin nona, orang yang justru paling beta sayang. Beta akui, beta terlalu sering lihat-lihat nona pu chat atau kenangan masa lalu, terus mulai mikir yang aneh-aneh, sampai akhirnya beta nuduh atau ngasih jarak. Padahal nona seng salah apa-apa. Beta cuma terlalu takut kehilangan nona sampai lupa kalo beta pu cara nyikapinnya malah bikin nona cape atau mungkin ilfeel. Beta minta maaf ya nona, bukan cuma karena beta bikin nona bete, tapi karena beta belum bisa jadi pasangan yang tenang dan percaya penuh sama nona. Beta tau nona selalu berusaha jujur dan terbuka, tapi beta malah nyiptain drama dari pikiran sendiri. Beta janji bakal belajar buat lebih dewasa, buat seng ladenin rasa cemburu bodoh yang cuma nyakitin katong hubungan. Beta cuma pengen nona tau, seng ada maksud buat bikin nona ngerasa jauh. Beta cuma masih belajar buat jadi orang yang pantas buat nona. Maafin beta ya sayang. Beta sayang nona, serius. Beta seng mau masalah sepele kaya gini bikin katong jadi dingin lagi dingin lai. Jadi mulai skarang mari sama-sama tanam prinsip: we argue, we fix, we stay. Selesaikan masalahnya, bukan hubungannya. Okay baby? Once again, maaf ya nona. I love you so much, Aleda 🩵`;
+
+audioPlay.addEventListener("click", () => {
+  if (audio.paused) {
+    audio.play();
+    audioPlay.textContent = "⏸ Berhenti";
+  } else {
+    audio.pause();
+    audioPlay.textContent = "▶ Putar Lagu";
+  }
+});
+
+pinSubmit.addEventListener("click", () => {
+  const val = pinInput.value.trim();
+  if (val === "100625") {
+    openScene();
+  } else {
+    pinMsg.textContent = "Woi, ko sapa? Cuma Aleda yang tau pin ini 😏";
+  }
+});
+
+function openScene() {
+  pinSection.style.display = "none";
+  scene.style.display = "flex";
+
+  // Grow stem
+  stem.style.animation = "growStem 1.5s ease forwards";
+
+  // Create petals dynamically
+  const petalCount = 20;
+  for (let i = 0; i < petalCount; i++) {
+    const petal = document.createElement("div");
+    petal.className = "petal";
+    petal.style.setProperty("--rot", `${i * (360 / petalCount)}deg`);
+    sunflower.appendChild(petal);
+    setTimeout(() => {
+      petal.style.animation = "bloomPetal 1s ease forwards";
+    }, 1000 + i * 80);
+  }
+
+  // Center
+  const center = document.createElement("div");
+  center.className = "center";
+  sunflower.appendChild(center);
+  setTimeout(() => {
+    center.style.animation = "bloomCenter 1s ease forwards";
+  }, 2500);
+
+  // Show letter
+  setTimeout(() => {
+    document.getElementById("letterText").textContent = LETTER;
+    letter.style.display = "block";
+  }, 3500);
+}
+</script>
+
+</body>
+</html>
